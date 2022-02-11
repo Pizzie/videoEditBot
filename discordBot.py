@@ -305,18 +305,19 @@ async def parse_command(message):
     args = spl[1].strip() if len(spl) > 1 else ""
     
     final_command_name = None
-    if cmd in ["concat", "combine"]:
-        final_command_name = "concat"
-    elif cmd in ["download", "downloader"]:
-        final_command_name = "download"
-    elif cmd == "help":
-        final_command_name = "help"
-    elif cmd == "hat":
-        final_command_name = "hat"
-    elif (ev1 := (cmd in ["destroy", ""])) or has_meta_prefix:
-        final_command_name = "destroy"
-        if not ev1 or cmd == "":
-            args = f"{cmd} {args}"
+    if has_meta_prefix:
+        if cmd in ["concat", "combine"]:
+            final_command_name = "concat"
+        elif cmd in ["download", "downloader"]:
+            final_command_name = "download"
+        elif cmd == "help":
+            final_command_name = "help"
+        elif cmd == "hat":
+            final_command_name = "hat"
+        elif (ev1 := (cmd in ["destroy", ""])):
+            final_command_name = "destroy"
+            if not ev1 or cmd == "":
+                args = f"{cmd} {args}"
 
     if not final_command_name:
         return
